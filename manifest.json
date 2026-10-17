@@ -1,0 +1,63 @@
+{
+  "manifest_version": 3,
+  "name": "Timmy - Gmail Power Search",
+  "version": "1.0.0",
+  "description": "High-precision power search for Gmail & Google Workspace mail. Bypasses fuzzy AI results with instant targeted presets.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Timmy - Gmail Power Search",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://mail.google.com/*"
+  ],
+  "omnibox": {
+    "keyword": "t"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "shared/constants.js",
+        "content/gmail-pill-bar.js"
+      ],
+      "css": [
+        "content/gmail-pill-bar.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+T",
+        "mac": "Alt+Shift+T"
+      },
+      "description": "Open Timmy Power Search Popup"
+    }
+  }
+}

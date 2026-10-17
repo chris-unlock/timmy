@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timmy - Gmail Power Search Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options-container">
+    <!-- Sidebar / Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <img src="../icons/icon48.png" width="28" height="28" alt="Timmy Logo" style="display: block;">
+        </div>
+        <div class="brand-info">
+          <h1>Timmy</h1>
+          <span>Gmail Power Search</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#presets" class="nav-item active" data-tab="presets">
+          <span class="nav-icon">⚡</span>
+          <span>Search Presets</span>
+        </a>
+        <a href="#general" class="nav-item" data-tab="general">
+          <span class="nav-icon">⚙️</span>
+          <span>General & Accounts</span>
+        </a>
+        <a href="#omnibox" class="nav-item" data-tab="omnibox">
+          <span class="nav-icon">⌨️</span>
+          <span>Omnibox & Shortcuts</span>
+        </a>
+        <a href="#backup" class="nav-item" data-tab="backup">
+          <span class="nav-icon">💾</span>
+          <span>Backup & Sync</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="version-label">v1.0.0 • Manifest V3</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      <!-- Notification toast -->
+      <div id="toastMessage" class="toast hidden">Settings Saved</div>
+
+      <!-- Tab: Presets -->
+      <section id="tab-presets" class="tab-pane active">
+        <div class="pane-header">
+          <div>
+            <h2>Search Presets & Recipes</h2>
+            <p class="pane-subtitle">Manage, reorder, or create custom Gmail power search recipes.</p>
+          </div>
+          <button id="addNewPresetBtn" class="primary-btn">
+            <span>+ Add New Preset</span>
+          </button>
+        </div>
+
+        <div class="presets-table-wrap">
+          <table class="presets-table">
+            <thead>
+              <tr>
+                <th style="width: 44px;">Icon</th>
+                <th>Label</th>
+                <th>Query Pattern</th>
+                <th style="width: 90px; text-align: center;">Default</th>
+                <th style="width: 140px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="presetsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-actions-bottom">
+          <button id="resetDefaultsBtn" class="danger-outline-btn">Reset Presets to Defaults</button>
+        </div>
+      </section>
+
+      <!-- Tab: General Settings -->
+      <section id="tab-general" class="tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2>General Preferences</h2>
+            <p class="pane-subtitle">Configure Gmail integration, tab behavior, and multi-account routing.</p>
+          </div>
+          <button id="saveGeneralBtn" class="primary-btn">Save Changes</button>
+        </div>
+
+        <div class="settings-card">
+          <div class="setting-item">
+            <div class="setting-text">
+              <h3>In-Gmail Filter Pills</h3>
+              <p>Inject power filter buttons directly underneath Gmail’s search bar on <code>mail.google.com</code>.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="generalGmailPills">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-text">
+              <h3>Tab Navigation Behavior</h3>
+              <p>Choose whether to update your existing Gmail tab or always open searches in a fresh tab.</p>
+            </div>
+            <select id="generalTabBehavior" class="select-field">
+              <option value="reuse">Reuse existing Gmail tab (Recommended)</option>
+              <option value="new_tab">Always open in a new tab</option>
+            </select>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-text">
+              <h3>Google Workspace Account Routing</h3>
+              <p>Detect the active Gmail tab's user profile (e.g. <code>/u/0/</code> vs <code>/u/1/</code>) or lock to a specific index.</p>
+            </div>
+            <select id="generalAccountMode" class="select-field">
+              <option value="auto">Smart Auto-Detect (Active tab profile)</option>
+              <option value="0">Always use Account 1 (/u/0/)</option>
+              <option value="1">Always use Account 2 (/u/1/)</option>
+              <option value="2">Always use Account 3 (/u/2/)</option>
+              <option value="3">Always use Account 4 (/u/3/)</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab: Omnibox & Shortcuts -->
+      <section id="tab-omnibox" class="tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2>Omnibox & Keyboard Shortcuts</h2>
+            <p class="pane-subtitle">Supercharge your navigation speed from anywhere in Chrome.</p>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <h3>Address Bar Shortcut</h3>
+          <p>You can search Gmail without ever opening the extension popup:</p>
+          <ol class="guide-steps">
+            <li>Click your Chrome address bar (or press <code>Ctrl+L</code> / <code>Cmd+L</code>).</li>
+            <li>Type <kbd>t</kbd> and hit <kbd>Space</kbd> or <kbd>Tab</kbd>.</li>
+            <li>Type your search query (e.g. <code>t invoice 2026</code>).</li>
+            <li>Press <kbd>Enter</kbd> to execute your default preset (e.g. Search Entire Mailbox).</li>
+            <li>Or use the <kbd>↓</kbd> Down Arrow to pick any other preset suggestion.</li>
+          </ol>
+        </div>
+
+        <div class="guide-card">
+          <h3>Configure Global Keyboard Shortcut</h3>
+          <p>To open Timmy's popup anywhere with a hotkey (like <code>Alt+Shift+T</code> or <code>Ctrl+Shift+K</code>):</p>
+          <button id="openShortcutsBtn" class="secondary-btn">Open Chrome Shortcuts Manager ↗</button>
+        </div>
+      </section>
+
+      <!-- Tab: Backup & Sync -->
+      <section id="tab-backup" class="tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2>Backup & Configuration</h2>
+            <p class="pane-subtitle">Export or import your search presets to sync across workstations.</p>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <div class="setting-item">
+            <div class="setting-text">
+              <h3>Export Preset Configuration</h3>
+              <p>Download your custom presets and preferences as a JSON file.</p>
+            </div>
+            <button id="exportConfigBtn" class="secondary-btn">Export to JSON</button>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-text">
+              <h3>Import Configuration</h3>
+              <p>Load presets from an exported JSON file.</p>
+            </div>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+            <button id="importConfigBtn" class="secondary-btn">Import JSON File</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal: Add/Edit Preset -->
+  <div id="presetModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add New Preset</h3>
+        <button id="closeModalBtn" class="modal-close">&times;</button>
+      </div>
+
+      <form id="presetForm" class="modal-form">
+        <input type="hidden" id="editPresetId">
+
+        <div class="form-row form-row-split">
+          <div class="form-group flex-1">
+            <label for="presetIcon">Icon (Emoji)</label>
+            <input type="text" id="presetIcon" class="form-input" placeholder="🔍" maxlength="4" value="🔍" required>
+          </div>
+          <div class="form-group flex-3">
+            <label for="presetShortLabel">Short Label (For Pill Buttons)</label>
+            <input type="text" id="presetShortLabel" class="form-input" placeholder="e.g. Acme" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="presetLabel">Full Label</label>
+          <input type="text" id="presetLabel" class="form-input" placeholder="e.g. Acme Client Docs" required>
+        </div>
+
+        <div class="form-group">
+          <label for="presetPattern">
+            Query Pattern 
+            <span class="help-text">(Use <code>%s</code> where your search term will be inserted)</span>
+          </label>
+          <input type="text" id="presetPattern" class="form-input font-mono" placeholder="e.g. from:acme.com in:anywhere %s" required>
+        </div>
+
+        <div class="form-group">
+          <label for="presetDesc">Description</label>
+          <input type="text" id="presetDesc" class="form-input" placeholder="e.g. Finds all emails and receipts from Acme Corp">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelModalBtn" class="secondary-btn">Cancel</button>
+          <button type="submit" class="primary-btn">Save Preset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../shared/constants.js"></script>
+  <script src="../shared/search-utils.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

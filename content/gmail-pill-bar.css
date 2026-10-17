@@ -1,0 +1,122 @@
+/**
+ * Timmy - Gmail Power Search
+ * In-Gmail Pill Bar Styles
+ */
+
+#timmy-gmail-pillbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  margin: 4px auto 6px auto;
+  max-width: 720px;
+  width: 90%;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  z-index: 1000;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  user-select: none;
+}
+
+#timmy-gmail-pillbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Badge label */
+.timmy-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(26, 115, 232, 0.12);
+  color: #1a73e8;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .timmy-pill-badge {
+    background: rgba(138, 180, 248, 0.15);
+    color: #8ab4f8;
+  }
+}
+
+/* Individual Pill Buttons */
+.timmy-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(60, 64, 67, 0.18);
+  background: #ffffff;
+  color: #3c4043;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08);
+}
+
+.timmy-pill-btn:hover {
+  background: #f1f3f4;
+  border-color: #dadce0;
+  color: #1a73e8;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(60, 64, 67, 0.15);
+}
+
+.timmy-pill-btn:active {
+  transform: translateY(0);
+  background: #e8f0fe;
+}
+
+.timmy-pill-btn.timmy-active {
+  background: #e8f0fe;
+  color: #1a73e8;
+  border-color: #1a73e8;
+  font-weight: 600;
+}
+
+/* Dark mode compatibility with Gmail's dark theme */
+body[class*="dark"] .timmy-pill-btn,
+@media (prefers-color-scheme: dark) {
+  .timmy-pill-btn {
+    background: #282a2d;
+    color: #e8eaed;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+
+  .timmy-pill-btn:hover {
+    background: #35373a;
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #8ab4f8;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  .timmy-pill-btn:active,
+  .timmy-pill-btn.timmy-active {
+    background: rgba(138, 180, 248, 0.2);
+    color: #8ab4f8;
+    border-color: #8ab4f8;
+  }
+}
+
+.timmy-pill-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.timmy-pill-text {
+  font-size: 11.5px;
+}

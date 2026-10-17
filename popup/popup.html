@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timmy - Gmail Power Search</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="timmy-app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <img src="../icons/icon32.png" width="22" height="22" alt="Timmy Logo" style="display: block;">
+        </div>
+        <div class="brand-text">
+          <span class="app-name">Timmy</span>
+          <span class="app-tagline">Gmail Power Search</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="accountBadge" class="account-badge" title="Target Gmail Account">Auto: /u/0/</span>
+        <button id="settingsToggleBtn" class="icon-btn" title="Quick Settings" aria-label="Settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Settings Drawer (Collapsible) -->
+    <div id="settingsDrawer" class="settings-drawer hidden">
+      <div class="drawer-header">
+        <span class="drawer-title">Preferences</span>
+        <button id="openFullOptionsBtn" class="link-btn">Full Options Page ↗</button>
+      </div>
+      
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label">In-Gmail Filter Pills</span>
+          <span class="setting-desc">Inject power buttons directly on mail.google.com</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggleGmailPills">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label">Reuse Gmail Tab</span>
+          <span class="setting-desc">Focus existing tab instead of opening new ones</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggleReuseTab">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label">Account Routing</span>
+          <span class="setting-desc">Target Google account</span>
+        </div>
+        <select id="selectAccountMode" class="select-input">
+          <option value="auto">Smart Auto-Detect</option>
+          <option value="0">Default Account (/u/0/)</option>
+          <option value="1">Account 2 (/u/1/)</option>
+          <option value="2">Account 3 (/u/2/)</option>
+          <option value="3">Account 4 (/u/3/)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Search Box -->
+    <div class="search-section">
+      <div class="search-bar-wrap">
+        <span class="search-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Search mail... (Press Enter to search)" 
+          autofocus 
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button id="clearInputBtn" class="clear-btn hidden" title="Clear text">✕</button>
+        <button id="executeSearchBtn" class="submit-btn" title="Run Search (Enter)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Live Query Preview -->
+      <div class="query-preview">
+        <span class="preview-label">Gmail Query:</span>
+        <code id="queryPreviewText" class="preview-code">in:anywhere</code>
+      </div>
+    </div>
+
+    <!-- Presets Section -->
+    <section class="presets-section">
+      <div class="section-header">
+        <span class="section-title">Search Presets</span>
+        <span class="shortcut-hint">Click preset or select with Tab/Arrows</span>
+      </div>
+
+      <div id="presetsGrid" class="presets-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Recent Searches -->
+    <section id="recentSection" class="recent-section hidden">
+      <div class="section-header">
+        <span class="section-title">Recent Searches</span>
+        <button id="clearRecentBtn" class="text-btn">Clear</button>
+      </div>
+      <div id="recentList" class="recent-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-tip">
+        <span>Tip: Type <code>t &lt;query&gt;</code> in Chrome address bar</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../shared/constants.js"></script>
+  <script src="../shared/search-utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
